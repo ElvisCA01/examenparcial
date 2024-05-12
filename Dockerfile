@@ -1,11 +1,23 @@
-# Usar una imagen base con Maven para construir el proyecto
-FROM maven:3.6.3-jdk-11 as build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
+# Usar una imagen base con JDK 11 y Maven
+FROM maven:3.8.4-openjdk-17 AS build
 
-# Usar OpenJDK para ejecutar la aplicación
-FROM openjdk:11
-COPY --from=build /app/target/*.jar app.jar
+# Establecer un directorio de trabajo
+WORKDIR /app
+
+# Copiar archivos de tu proyecto al directorio de trabajo
+COPY . /app
+
+# Ejecutar Maven para construir el proyecto
+RUN mvn clean package
+
+# Crear una nueva imagen basada en OpenJDK 11
+FROM openjdk:17
+
+# Exponer el puerto que utilizará la aplicación
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+
+# Copiar el archivo JAR construido desde la etapa anterior
+COPY --from=build /app/target/com.example.parcial-0.0.1-SNAPSHOT.jar /app/com.example.parcial-0.0.1-SNAPSHOT.jar
+
+# Establecer el punto de entrada para ejecutar la aplicación
+ENTRYPOINT ["java", "-jar", "/app/example.parcial 0.0.1-SNAPSHOT.jar"]
