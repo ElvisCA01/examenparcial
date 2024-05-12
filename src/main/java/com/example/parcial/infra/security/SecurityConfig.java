@@ -33,6 +33,7 @@ public class SecurityConfig implements WebMvcConfigurer {
             configuration.setAllowedOrigins(Arrays.asList("*"));
             configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
             configuration.setAllowedOrigins(Arrays.asList("https://splendorous-nougat-87c36b.netlify.app/"));
+
             configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
             configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
             configuration.setAllowCredentials(true);
